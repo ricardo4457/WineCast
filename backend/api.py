@@ -3,7 +3,7 @@ from flask_sqlalchemy import  SQLAlchemy
 from datetime import  datetime
 app = Flask(__name__)
 # Antes criar db com o script 'CREATE DATABASE WineCast_db;'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin123@localhost'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:admin123@localhost'
 # Secret Key
 
 # Initialize DB
