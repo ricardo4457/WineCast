@@ -17,5 +17,5 @@ def create_app():
     # Create all Tables
     with app.app_context():
         db.create_all()
-
+    #teste
     return app
