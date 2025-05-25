@@ -5,36 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e13938f-6830-47f0-9093-932f3b7f5611" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "ricardo4457"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ricardo4457&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/ricardo4457/WineCast.git",
-    "accountId": "3d99e492-c8d9-4c6d-87c2-e39bf8a3fc6f"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ricardo4457/WineCast.git&quot;,
+    &quot;accountId&quot;: &quot;3d99e492-c8d9-4c6d-87c2-e39bf8a3fc6f&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2xYCbCodY02NfhgglPvmKp07cn0" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -43,7 +46,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "backend-setup",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "backend-db",
     "last_opened_file_path": "C:/Users/ricardo true/OneDrive/Ambiente de Trabalho/ViniCultura Project/backend"
   }
 }]]></component>
@@ -64,5 +68,9 @@
       <updated>1748105688535</updated>
     </task>
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="setup : remove venv folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="setup : remove venv folder" />
   </component>
 </project>
