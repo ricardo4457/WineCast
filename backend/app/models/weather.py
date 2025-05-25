@@ -1,5 +1,4 @@
-from app.models.base import db
-from datetime import datetime
+from app.models.base import db , datetime
 
 class Weather(db.Model):
     __tablename__ = 'weather_data'
