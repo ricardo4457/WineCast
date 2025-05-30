@@ -1,25 +1,32 @@
+# app/__init__.py
 from flask import Flask
-from app.config import Config
-from app.models import db
-from app.routes import api
+from flask_sqlalchemy import SQLAlchemy
+from flask_restful import Api
+from flask_socketio import SocketIO
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object(Config)
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'mysql+mysqlconnector://user:password@localhost/vineyard')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    # Inicialize DB
-    db.init_app(app)
+db = SQLAlchemy(app)
+api = Api(app)
+socketio = SocketIO(app, message_queue='redis://')
 
-    # Routes
-    app.register_blueprint(api, url_prefix='/api')
+# Importações após inicialização para evitar ciclos
+from app.routes.weather import WeatherResource, ForecastResource
+from app.services.weather_service import WeatherService
+from app.models.weather import Weather
 
-    # Create all Tables
-    with app.app_context():
-        db.create_all()
-    #teste
-    # Register error handlers, if any
-    # app.register_error_handler(404, not_found_error)  
-    # app.register_error_handler(500, internal_server_error)
-    # Register other blueprints or extensions as needed
-    return app
+# Registros de endpoints
+api.add_resource(WeatherResource, '/weather/<int:city_id>')
+api.add_resource(ForecastResource, '/forecast/<int:city_id>')
+
+# Inicializar serviço de atualização periódica
+weather_service = WeatherService()
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True)
