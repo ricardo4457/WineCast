@@ -112,3 +112,69 @@ def api_harvest_suggestion():
         }
     }), HTTPStatus.OK
 
+
+@api.route('/weather/irrigation-check', methods=['POST'])
+def api_irrigation_check():
+    """Check if irrigation is needed based on temperature and precipitation."""
+    if not request.is_json:
+        return jsonify({"error": "Request must be JSON"}), HTTPStatus.BAD_REQUEST
+    
+    data = request.get_json()
+    valid, values, error_code = validate_fields(data, ['temperature'])
+    if not valid:
+        return jsonify(values), error_code
+    
+    try:
+        precipitation = float(data.get('precipitation', 0))
+        needs_water = weather_service.needs_irrigation(
+            temperature=values['temperature'],
+            precipitation=precipitation
+        )
+        
+        return jsonify({
+            "needs_irrigation": needs_water,
+            "conditions": {
+                "temperature": values['temperature'],
+                "precipitation": precipitation
+            }
+        }), HTTPStatus.OK
+            
+    except (TypeError, ValueError):
+        return jsonify({"error": "Invalid parameters"}), HTTPStatus.BAD_REQUEST
+
+@api.route('/weather/forecast', methods=['GET'])
+def api_forecast():
+    """Get weather forecast and analysis for the next few days."""
+    lat = request.args.get('lat')
+    lon = request.args.get('lon')
+    days = request.args.get('days', default=3)
+
+    if lat is None or lon is None:
+        return jsonify({
+            "error": "Missing required query parameters: lat and lon are required."
+        }), HTTPStatus.BAD_REQUEST
+
+    try:
+        lat = float(lat)
+        lon = float(lon)
+        days = int(days)
+        if days < 1 or days > 5:
+            return jsonify({
+                "error": "Days parameter must be between 1 and 5"
+            }), HTTPStatus.BAD_REQUEST
+    except (TypeError, ValueError):
+        return jsonify({
+            "error": "Invalid values for lat, lon, or days. Must be numbers."
+        }), HTTPStatus.BAD_REQUEST
+
+    forecast = weather_service.analyze_forecast(lat, lon, days)
+    
+    if forecast is None:
+        return jsonify({
+            "error": "Failed to fetch forecast data from API."
+        }), HTTPStatus.BAD_GATEWAY
+
+    return jsonify({
+        "status": "success",
+        "data": forecast
+    }), HTTPStatus.OK
