@@ -7,6 +7,7 @@ api = Blueprint('api', __name__)
 
 weather_service = WeatherService()
 
+
 def validate_fields(data: Dict[str, Any], required_fields: list) -> Tuple[bool, Dict[str, Any], int]:
     """Helper to validate required fields and convert to float."""
     missing = [f for f in required_fields if data.get(f) is None]
@@ -82,35 +83,6 @@ def analyze_humidity():
         "temperature": values['temperature']
     }), HTTPStatus.OK
 
-@api.route('/weather/harvest-suggestion', methods=['POST'])
-def api_harvest_suggestion():
-    """Suggest the best time to harvest based on weather conditions."""
-    if not request.is_json:
-        return jsonify({"error": "Request must be JSON"}), HTTPStatus.BAD_REQUEST
-
-    data = request.get_json()
-    valid, values, error_code = validate_fields(data, ['temperature', 'humidity'])
-    if not valid:
-        return jsonify(values), error_code
-
-    try:
-        weather_params = {
-            'temperature': values['temperature'],
-            'humidity': values['humidity'],
-            'precipitation': float(data.get('precipitation', 0))
-        }
-    except (TypeError, ValueError):
-        return jsonify({"error": "Invalid weather parameters"}), HTTPStatus.BAD_REQUEST
-
-    suggestion = weather_service.suggest_harvest_time(**weather_params)
-
-    return jsonify({
-        "status": "success",
-        "data": {
-            "suggestion": suggestion,
-            "conditions": weather_params
-        }
-    }), HTTPStatus.OK
 
 
 @api.route('/weather/irrigation-check', methods=['POST'])
