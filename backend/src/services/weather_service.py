@@ -166,3 +166,56 @@ class WeatherService:
             "daily_analysis": daily_analysis,
             "summary": self._summarize_forecast(daily_analysis),
         }
+
+    def needs_irrigation(self, temperature: float, precipitation: float) -> bool:
+        """Check if irrigation is needed."""
+        return temperature > self.TEMP_IRRIGATION and precipitation == 0
+
+    def risk_of_fungi(self, humidity: float, temperature: float) -> bool:
+        """Check risk of fungi."""
+        return (
+            humidity > self.HUMIDITY_HIGH
+            and self.TEMP_MIN <= temperature <= self.TEMP_MAX
+        )
+
+    def suggest_harvest_time(
+        self, temperature: float, humidity: float, precipitation: float = 0
+    ) -> str:
+        """Suggest harvest time based on conditions."""
+        if precipitation > 0:
+            return self.MESSAGES["wet_weather"]
+        if not (self.TEMP_MIN <= temperature <= self.TEMP_MAX):
+            return self.MESSAGES["bad_temp"]
+        if humidity > self.HUMIDITY_HIGH:
+            return self.MESSAGES["high_humidity"]
+        if (
+            self.TEMP_MIN <= temperature <= 26
+            and self.HUMIDITY_MIN <= humidity <= self.HUMIDITY_MAX
+        ):
+            return self.MESSAGES["good_harvest"]
+        if self.HUMIDITY_MAX < humidity <= self.HUMIDITY_HIGH:
+            return self.MESSAGES["humidity_warning"]
+        return self.MESSAGES["default"]
+
+    def _summarize_forecast(self, daily_analysis: List[Dict]) -> Dict:
+        """Summarize forecast analysis results."""
+        good_days = sum(
+            1
+            for day in daily_analysis
+            if day["conditions"]["harvest_suggestion"] == self.MESSAGES["good_harvest"]
+        )
+
+        return {
+            "favorable_days": good_days,
+            "recommendation": self._get_forecast_recommendation(
+                good_days, len(daily_analysis)
+            ),
+        }
+
+    def _get_forecast_recommendation(self, good_days: int, total_days: int) -> str:
+        """Get overall recommendation based on forecast."""
+        if good_days == 0:
+            return "No favorable harvest days in forecast period"
+        if good_days == total_days:
+            return "Excelentes condições de colheita esperadas para todos os dias"
+        return f"Condições favoráveis em {good_days} de {total_days} dias"
