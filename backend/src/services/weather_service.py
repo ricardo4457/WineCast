@@ -215,7 +215,7 @@ class WeatherService:
     def _get_forecast_recommendation(self, good_days: int, total_days: int) -> str:
         """Get overall recommendation based on forecast."""
         if good_days == 0:
-            return "No favorable harvest days in forecast period"
+            return "Nenhum dia de colheita favorável no período de previsão"
         if good_days == total_days:
             return "Excelentes condições de colheita esperadas para todos os dias"
         return f"Condições favoráveis em {good_days} de {total_days} dias"
