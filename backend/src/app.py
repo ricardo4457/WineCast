@@ -96,12 +96,8 @@ from flask_socketio import SocketIO
 from flask_cors import CORS  
 from dotenv import load_dotenv
 import os
-
-# Importe os seus serviços
 from services.weather_service import WeatherService
-# from services.db_service import DBService # Descomente se for usar o DBService aqui
-# from utils.websocket_handler import WebSocketHandler # Descomente se for usar o WebSocketHandler aqui
-from routes import api  # Import the API blueprint
+from routes import api  
 
 load_dotenv()
 print("API KEY FROM ENV:", os.getenv('OPENWEATHER_API_KEY'))
@@ -109,8 +105,6 @@ print("API KEY FROM ENV:", os.getenv('OPENWEATHER_API_KEY'))
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '2ae1455195fbfca6a289de7c7dc50ea4'
 
-# Add CORS configuration here, before registering blueprints
-# For REST API endpoints
 CORS(app, resources={
     r"/api/*": {
         "origins": ["http://localhost:5173"],
@@ -119,16 +113,12 @@ CORS(app, resources={
     }
 })
 
-# For WebSocket connections
 socketio = SocketIO(app, cors_allowed_origins=["http://localhost:5173"])
 
 app.register_blueprint(api, url_prefix='/api')
 
 weather_service = WeatherService()
-# db_service = DBService() # Descomente se for usar
-# websocket_handler = WebSocketHandler(socketio) # Descomente se for usar
 
-# --- Defina as suas rotas e eventos SocketIO AQUI ---
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -136,17 +126,53 @@ def index():
 @socketio.on('connect')
 def handle_connect():
     print('Client connected')
-    # Enviar dados assim que o cliente se conecta, se desejar uma atualização imediata
-    # initial_data = weather_service.fetch_weather_data()
-    # if initial_data:
-    #     socketio.emit('weather_update', initial_data)
-
 
 @socketio.on('disconnect')
 def handle_disconnect():
     print('Client disconnected')
 
-# --- Inicie o servidor e threads em segundo plano DEPOIS de definir as rotas ---
+@socketio.on('subscribe_to_weather')
+def handle_subscribe_to_weather(data):
+    print(f"Client subscribed to weather for: {data}")
+    lat = data.get('lat')
+    lon = data.get('lon')
+    days = data.get('days', 3)
+
+    if lat is None or lon is None:
+        socketio.emit('weather_error', {'error': 'Latitude and longitude are required.'})
+        return
+
+    current_weather = weather_service.fetch_weather_data(lat, lon)
+    if current_weather:
+        socketio.emit('current_weather_update', current_weather)
+
+        analysis = weather_service.analyze_weather_data(
+            temperature=current_weather['temperature'],
+            humidity=current_weather['humidity'],
+            precipitation=current_weather.get('precipitation', 0),
+            wind_speed=current_weather.get('wind_speed', 0)
+        )
+        if analysis:
+            socketio.emit('analysis_update', {
+                "risk_of_fungi": analysis["risk_of_fungi"],
+                "harvest_suggestion": analysis["harvest_suggestion"]
+            })
+            socketio.emit('irrigation_status_update', {
+                "needs_irrigation": analysis["needs_irrigation"],
+                "conditions": { 
+                    "temperature": current_weather['temperature'],
+                    "precipitation": current_weather.get('precipitation', 0)
+                }
+            })
+    else:
+        socketio.emit('weather_error', {'error': 'Failed to fetch current weather.'})
+
+    forecast = weather_service.analyze_forecast(lat, lon, days)
+    if forecast:
+        socketio.emit('forecast_update', forecast)
+    else:
+        socketio.emit('weather_error', {'error': 'Failed to fetch forecast.'})
+
 if __name__ == '__main__':
     print("Starting Flask server on http://127.0.0.1:5000/")
     socketio.run(app, debug=True)

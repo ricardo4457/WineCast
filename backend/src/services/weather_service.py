@@ -78,7 +78,7 @@ class WeatherService:
                 data = response.json()
                 return self._parse_forecast_data(
                     data["list"][: days * 8]
-                )  # 8 readings per day
+                ) 
         except requests.RequestException:
             pass
         return None
@@ -101,7 +101,7 @@ class WeatherService:
             daily_data[date]["temps"].append(item["main"]["temp"])
             daily_data[date]["humids"].append(item["main"]["humidity"])
             daily_data[date]["precips"].append(
-                item.get("rain", {}).get("3h", 0) / 3  # Convert 3h to 1h
+                item.get("rain", {}).get("3h", 0) / 3
             )
             daily_data[date]["winds"].append(item["wind"]["speed"])
 
@@ -110,7 +110,7 @@ class WeatherService:
                 date=date,
                 temperature=sum(data["temps"]) / len(data["temps"]),
                 humidity=sum(data["humids"]) / len(data["humids"]),
-                precipitation=max(data["precips"]),  # Use max precipitation
+                precipitation=max(data["precips"]),
                 wind_speed=sum(data["winds"]) / len(data["winds"]),
             )
             for date, data in daily_data.items()
@@ -199,16 +199,26 @@ class WeatherService:
 
     def _summarize_forecast(self, daily_analysis: List[Dict]) -> Dict:
         """Summarize forecast analysis results."""
+        if not daily_analysis:
+            return {
+                "favorable_days": 0,
+                "total_days": 0, 
+                "recommendation": "No forecast data available to summarize.",
+            }
+
         good_days = sum(
             1
             for day in daily_analysis
             if day["conditions"]["harvest_suggestion"] == self.MESSAGES["good_harvest"]
         )
 
+        total_days = len(daily_analysis) 
+
         return {
             "favorable_days": good_days,
+            "total_days": total_days, 
             "recommendation": self._get_forecast_recommendation(
-                good_days, len(daily_analysis)
+                good_days, total_days 
             ),
         }
 

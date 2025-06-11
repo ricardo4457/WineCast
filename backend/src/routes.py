@@ -6,8 +6,6 @@ from typing import Dict, Any, Tuple
 api = Blueprint('api', __name__)
 
 weather_service = WeatherService()
-
-
 def validate_fields(data: Dict[str, Any], required_fields: list) -> Tuple[bool, Dict[str, Any], int]:
     """Helper to validate required fields and convert to float."""
     missing = [f for f in required_fields if data.get(f) is None]
