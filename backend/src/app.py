@@ -124,7 +124,6 @@ socketio = SocketIO(app, cors_allowed_origins=["http://localhost:5173"])
 
 app.register_blueprint(api, url_prefix='/api')
 
-# Inicialize os seus serviços aqui
 weather_service = WeatherService()
 # db_service = DBService() # Descomente se for usar
 # websocket_handler = WebSocketHandler(socketio) # Descomente se for usar
