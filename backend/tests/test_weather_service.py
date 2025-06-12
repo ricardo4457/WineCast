@@ -38,5 +38,29 @@ class TestWeatherService(unittest.TestCase):
         self.assertFalse(result)
         print("✔ Teste concluído: Risco de fungos baixo")
 
+    def test_suggest_harvest_time_good_harvest(self):
+        print("Executando: Teste de sugestão de colheita com condições favoráveis...")
+        result = self.weather_service.suggest_harvest_time(temperature=25, humidity=50, precipitation=0)
+        self.assertEqual(result, self.weather_service.MESSAGES["good_harvest"])
+        print("✔ Teste concluído: Sugestão de colheita favorável")
+
+    def test_suggest_harvest_time_bad_temp(self):
+        print("Executando: Teste de sugestão de colheita com temperatura desfavorável...")
+        result = self.weather_service.suggest_harvest_time(temperature=35, humidity=50, precipitation=0)
+        self.assertEqual(result, self.weather_service.MESSAGES["bad_temp"])
+        print("✔ Teste concluído: Sugestão de colheita desfavorável devido à temperatura")
+
+    def test_fetch_forecast_invalid_coordinates(self):
+        print("Executando: Teste de previsão meteorológica com coordenadas inválidas...")
+        result = self.weather_service.fetch_forecast(lat=999, lon=999, days=3)
+        self.assertIsNone(result)
+        print("✔ Teste concluído: Previsão meteorológica com coordenadas inválidas retornou None")
+
+    def test_analyze_forecast_invalid_coordinates(self):
+        print("Executando: Teste de análise de previsão com coordenadas inválidas...")
+        result = self.weather_service.analyze_forecast(lat=999, lon=999, days=3)
+        self.assertIsNone(result)
+        print("✔ Teste concluído: Análise de previsão com coordenadas inválidas retornou None")
+
 if __name__ == '__main__':
     unittest.main()
