@@ -100,9 +100,7 @@ class WeatherService:
 
             daily_data[date]["temps"].append(item["main"]["temp"])
             daily_data[date]["humids"].append(item["main"]["humidity"])
-            daily_data[date]["precips"].append(
-                item.get("rain", {}).get("3h", 0) / 3
-            )
+            daily_data[date]["precips"].append(item["rain"]["3h"])
             daily_data[date]["winds"].append(item["wind"]["speed"])
 
         return [
