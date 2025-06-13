@@ -77,8 +77,7 @@ class WeatherService:
             if response.status_code == 200:
                 data = response.json()
                 return self._parse_forecast_data(
-                    data["list"][: days * 8]
-                ) 
+                    data["list"][: days * 8]) 
         except requests.RequestException:
             pass
         return None
@@ -101,8 +100,7 @@ class WeatherService:
             daily_data[date]["temps"].append(item["main"]["temp"])
             daily_data[date]["humids"].append(item["main"]["humidity"])
             daily_data[date]["precips"].append(
-                item.get("rain", {}).get("3h", 0) / 3
-            )
+            item.get("rain", {}).get("3h", 0) / 3)
             daily_data[date]["winds"].append(item["wind"]["speed"])
 
         return [
