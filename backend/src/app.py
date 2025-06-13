@@ -100,10 +100,9 @@ from services.weather_service import WeatherService
 from routes import api  
 
 load_dotenv()
-print("API KEY FROM ENV:", os.getenv('OPENWEATHER_API_KEY'))
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '2ae1455195fbfca6a289de7c7dc50ea4'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 CORS(app, resources={
     r"/api/*": {
