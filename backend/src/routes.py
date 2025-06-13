@@ -7,38 +7,38 @@ api = Blueprint('api', __name__)
 
 weather_service = WeatherService()
 def validate_fields(data: Dict[str, Any], required_fields: list) -> Tuple[bool, Dict[str, Any], int]:
-    """Helper to validate required fields and convert to float."""
+    """Ajuda para validar os campos obrigatórios e converter para float."""
     missing = [f for f in required_fields if data.get(f) is None]
     if missing:
-        return False, {"error": f"Missing required fields: {', '.join(missing)} are required."}, HTTPStatus.BAD_REQUEST
+        return False, {"error": f"Os seguintes campos são obrigatórios: {', '.join(missing)}."}, HTTPStatus.BAD_REQUEST
     try:
         values = {f: float(data.get(f, 0)) for f in required_fields}
     except (TypeError, ValueError):
-        return False, {"error": f"Invalid values for {', '.join(required_fields)}. Must be numbers."}, HTTPStatus.BAD_REQUEST
+        return False, {"error": f"Valores inválidos para {', '.join(required_fields)}. Devem ser números."}, HTTPStatus.BAD_REQUEST
     return True, values, None
 
 @api.route('/weather', methods=['GET'])
 def api_weather():
-    """Fetch current weather data from the API using lat/lon query params."""
+    """Obter dados meteorológicos atuais da API usando parâmetros de consulta lat/lon."""
     lat = request.args.get('lat')
     lon = request.args.get('lon')
     if lat is None or lon is None:
-        return jsonify({"error": "Missing required query parameters: lat and lon are required."}), HTTPStatus.BAD_REQUEST
+        return jsonify({"error": "Os seguintes campos são obrigatórios: lat e lon."}), HTTPStatus.BAD_REQUEST
     try:
         lat = float(lat)
         lon = float(lon)
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid values for lat or lon. Must be numbers."}), HTTPStatus.BAD_REQUEST
+        return jsonify({"error": "Valores inválidos para lat ou lon. Devem ser números."}), HTTPStatus.BAD_REQUEST
     data = weather_service.fetch_weather_data(lat, lon)
     if data is None:
-        return jsonify({"error": "Failed to fetch weather data from API."}), HTTPStatus.BAD_GATEWAY
-    return jsonify({"event": "Received data", "payload": data}), HTTPStatus.OK
+        return jsonify({"error": "Falha ao buscar dados meteorológicos na API."}), HTTPStatus.BAD_GATEWAY
+    return jsonify({"event": "Dados recebidos", "payload": data}), HTTPStatus.OK
 
 @api.route('/weather/analyze', methods=['POST'])
 def api_analyze_weather():
-    """Analyze weather data from minimal input (temperature, humidity, precipitation, wind_speed)."""
+    """Analisar dados meteorológicos a partir de entrada mínima (temperatura, humidade, precipitação, velocidade do vento)."""
     if not request.is_json:
-        return jsonify({"error": "Request must be JSON"}), HTTPStatus.BAD_REQUEST
+        return jsonify({"error": "A requisição deve ser JSON"}), HTTPStatus.BAD_REQUEST
     data = request.get_json()
     valid, values, error_code = validate_fields(data, ['temperature', 'humidity'])
     if not valid:
@@ -51,8 +51,8 @@ def api_analyze_weather():
         precipitation = float(precipitation)
         wind_speed = float(wind_speed)
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid value for 'precipitation' or 'wind_speed'. Must be numbers."}), HTTPStatus.BAD_REQUEST
-    
+        return jsonify({"error": "Valores inválidos para 'precipitação' ou 'velocidade do vento'. Devem ser números."}), HTTPStatus.BAD_REQUEST
+
     result = weather_service.analyze_weather_data(
         values['temperature'], 
         values['humidity'], 
@@ -61,15 +61,15 @@ def api_analyze_weather():
     )
     
     if not result:
-        return jsonify({"error": "Invalid values provided"}), HTTPStatus.BAD_REQUEST
-    
+        return jsonify({"error": "Valores inválidos fornecidos"}), HTTPStatus.BAD_REQUEST
+
     return jsonify(result), HTTPStatus.OK
 
 @api.route('/weather/analyze-humidity', methods=['POST'])
 def analyze_humidity():
-    """Analyze if there is a risk of fungi based on humidity and temperature."""
+    """Analisar se há risco de fungos com base na humidade e temperatura."""
     if not request.is_json:
-        return jsonify({"error": "Request must be JSON"}), HTTPStatus.BAD_REQUEST
+        return jsonify({"error": "A requisição deve ser JSON"}), HTTPStatus.BAD_REQUEST
     data = request.get_json()
     valid, values, error_code = validate_fields(data, ['humidity', 'temperature']) 
     if not valid:
@@ -85,10 +85,10 @@ def analyze_humidity():
 
 @api.route('/weather/irrigation-check', methods=['POST'])
 def api_irrigation_check():
-    """Check if irrigation is needed based on temperature and precipitation."""
+    """Verificar se é necessária irrigação com base na temperatura e precipitação."""
     if not request.is_json:
-        return jsonify({"error": "Request must be JSON"}), HTTPStatus.BAD_REQUEST
-    
+        return jsonify({"error": "A requisição deve ser JSON"}), HTTPStatus.BAD_REQUEST
+
     data = request.get_json()
     valid, values, error_code = validate_fields(data, ['temperature'])
     if not valid:
@@ -110,18 +110,18 @@ def api_irrigation_check():
         }), HTTPStatus.OK
             
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid parameters"}), HTTPStatus.BAD_REQUEST
+        return jsonify({"error": "Parâmetros inválidos"}), HTTPStatus.BAD_REQUEST
 
 @api.route('/weather/forecast', methods=['GET'])
 def api_forecast():
-    """Get weather forecast and analysis for the next few days."""
+    """Obter previsão do tempo e análise para os próximos dias."""
     lat = request.args.get('lat')
     lon = request.args.get('lon')
     days = request.args.get('days', default=3)
 
     if lat is None or lon is None:
         return jsonify({
-            "error": "Missing required query parameters: lat and lon are required."
+            "error": "Os seguintes campos são obrigatórios: lat e lon."
         }), HTTPStatus.BAD_REQUEST
 
     try:
@@ -130,18 +130,18 @@ def api_forecast():
         days = int(days)
         if days < 1 or days > 5:
             return jsonify({
-                "error": "Days parameter must be between 1 and 5"
+                "error": "O parâmetro days deve estar entre 1 e 5."
             }), HTTPStatus.BAD_REQUEST
     except (TypeError, ValueError):
         return jsonify({
-            "error": "Invalid values for lat, lon, or days. Must be numbers."
+            "error": "Valores inválidos para lat, lon ou days. Devem ser números."
         }), HTTPStatus.BAD_REQUEST
 
     forecast = weather_service.analyze_forecast(lat, lon, days)
     
     if forecast is None:
         return jsonify({
-            "error": "Failed to fetch forecast data from API."
+            "error": "Falha ao buscar dados de previsão na API."
         }), HTTPStatus.BAD_GATEWAY
 
     return jsonify({

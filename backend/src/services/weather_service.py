@@ -20,7 +20,7 @@ class ForecastData(TypedDict):
 
 
 class WeatherService:
-    """Service for weather data operations and analysis."""
+    """Serviço de operações e análise de dados meteorológicos."""
 
     # Variavies para análise de clima
     TEMP_MIN = 18
@@ -47,8 +47,8 @@ class WeatherService:
 
     def fetch_weather_data(self, lat: float, lon: float) -> Optional[WeatherData]:
         """
-        Fetch weather data from OpenWeather API.
-        Returns a dictionary with weather data or None if failed.
+        Obtém dados meteorológicos da API OpenWeather.
+         Devolve um dicionário com dados meteorológicos ou (None) se falhar.
 
         """
         params = {"lat": lat, "lon": lon, "appid": self.api_key, "units": "metric"}
@@ -59,7 +59,7 @@ class WeatherService:
                 return {
                     "temperature": data["main"]["temp"],
                     "humidity": data["main"]["humidity"],
-                    "precipitation": data.get("rain", {}).get("1h", 0),
+                    "precipitation": data.get("rain", {}).get("3h", 0),
                     "wind_speed": data["wind"]["speed"],
                 }
         except requests.RequestException:
@@ -69,7 +69,7 @@ class WeatherService:
     def fetch_forecast(
         self, lat: float, lon: float, days: int = 3
     ) -> Optional[List[ForecastData]]:
-        """Fetch weather forecast for specified number of days."""
+        """Obter a previsão do tempo para o número de dias especificado."""
         params = {"lat": lat, "lon": lon, "appid": self.api_key, "units": "metric"}
 
         try:
@@ -83,7 +83,7 @@ class WeatherService:
         return None
 
     def _parse_forecast_data(self, forecast_list: List[Dict]) -> List[ForecastData]:
-        """Parse raw forecast data into daily averages."""
+        """Analisar dados brutos de previsão em médias diárias."""
         daily_data = {}
 
         for item in forecast_list:
@@ -141,7 +141,7 @@ class WeatherService:
             return None
 
     def analyze_forecast(self, lat: float, lon: float, days: int = 3) -> Optional[Dict]:
-        """Analyze weather forecast for harvest planning."""
+        """Analisar as previsões meteorológicas para o planeamento da colheita."""
         forecast = self.fetch_forecast(lat, lon, days)
         if not forecast:
             return None
@@ -166,11 +166,11 @@ class WeatherService:
         }
 
     def needs_irrigation(self, temperature: float, precipitation: float) -> bool:
-        """Check if irrigation is needed."""
+        """Verificar se é necessária irrigação."""
         return temperature > self.TEMP_IRRIGATION and precipitation == 0
 
     def risk_of_fungi(self, humidity: float, temperature: float) -> bool:
-        """Check risk of fungi."""
+        """Verificar risco de fungos."""
         return (
             humidity > self.HUMIDITY_HIGH
             and self.TEMP_MIN <= temperature <= self.TEMP_MAX
@@ -179,7 +179,7 @@ class WeatherService:
     def suggest_harvest_time(
         self, temperature: float, humidity: float, precipitation: float = 0
     ) -> str:
-        """Suggest harvest time based on conditions."""
+        """Sugerir tempo de colheita com base nas condições."""
         if precipitation > 0:
             return self.MESSAGES["wet_weather"]
         if not (self.TEMP_MIN <= temperature <= self.TEMP_MAX):
@@ -196,12 +196,12 @@ class WeatherService:
         return self.MESSAGES["default"]
 
     def _summarize_forecast(self, daily_analysis: List[Dict]) -> Dict:
-        """Summarize forecast analysis results."""
+        """Resumir a análise diária da previsão do tempo."""
         if not daily_analysis:
             return {
                 "favorable_days": 0,
                 "total_days": 0, 
-                "recommendation": "No forecast data available to summarize.",
+                "recommendation": "Não existem dados de previsão para resumir.",
             }
 
         good_days = sum(
@@ -221,7 +221,7 @@ class WeatherService:
         }
 
     def _get_forecast_recommendation(self, good_days: int, total_days: int) -> str:
-        """Get overall recommendation based on forecast."""
+        """Obter recomendação geral com base na previsão."""
         if good_days == 0:
             return "Nenhum dia de colheita favorável no período de previsão"
         if good_days == total_days:

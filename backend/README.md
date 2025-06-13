@@ -72,7 +72,8 @@ backend/
 4. **Configure a chave da API:**
     - Crie um ficheiro `.env` na raiz do backend com o seguinte conteúdo:
       ```
-      OPENWEATHER_API_KEY=sua_chave_aqui
+      OPENWEATHER_API_KEY=chave_aqui
+      SECRET_KEY=chave_aqui
       ```
 
 5. **Inicie o servidor:**

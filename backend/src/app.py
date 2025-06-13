@@ -124,21 +124,21 @@ def index():
 
 @socketio.on('connect')
 def handle_connect():
-    print('Client connected')
+    print('Cliente estabeleceu ligação')
 
 @socketio.on('disconnect')
 def handle_disconnect():
-    print('Client disconnected')
+    print('Cliente desligou ligação')
 
 @socketio.on('subscribe_to_weather')
 def handle_subscribe_to_weather(data):
-    print(f"Client subscribed to weather for: {data}")
+    print(f"Cliente subscrito ao tempo para: {data}")
     lat = data.get('lat')
     lon = data.get('lon')
     days = data.get('days', 3)
 
     if lat is None or lon is None:
-        socketio.emit('weather_error', {'error': 'Latitude and longitude are required.'})
+        socketio.emit('weather_error', {'error': 'Latitude e longitude são obrigatórios.'})
         return
 
     current_weather = weather_service.fetch_weather_data(lat, lon)
@@ -164,14 +164,14 @@ def handle_subscribe_to_weather(data):
                 }
             })
     else:
-        socketio.emit('weather_error', {'error': 'Failed to fetch current weather.'})
+        socketio.emit('weather_error', {'error': 'Falha ao buscar dados meteorológicos.'})
 
     forecast = weather_service.analyze_forecast(lat, lon, days)
     if forecast:
         socketio.emit('forecast_update', forecast)
     else:
-        socketio.emit('weather_error', {'error': 'Failed to fetch forecast.'})
+        socketio.emit('weather_error', {'error': 'Falha ao buscar previsão.'})
 
 if __name__ == '__main__':
-    print("Starting Flask server on http://127.0.0.1:5000/")
-    socketio.run(app, debug=True)
+    print("http://127.0.0.1:5000/")
+    socketio.run(app, debug=False)
