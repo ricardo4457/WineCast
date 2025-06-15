@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App &mdash; WineCast  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Routes" href="routes.html" />
+    <link rel="prev" title="Weather Service" href="weather_service.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index1.html" class="icon icon-home">
+            WineCast
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Conteúdo</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="weather_service.html">Weather Service</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">App</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuracao-cors">Configuração CORS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuracao-da-api-rest">Configuração da API REST</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#endpoints-da-api-rest">Endpoints da API REST</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eventos-websocket">Eventos WebSocket</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conexoes-websocket">Conexões WebSocket</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exemplo-de-cliente-websocket">Exemplo de Cliente WebSocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notas-importantes">Notas Importantes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#app.handle_connect"><code class="docutils literal notranslate"><span class="pre">handle_connect()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#app.handle_disconnect"><code class="docutils literal notranslate"><span class="pre">handle_disconnect()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#app.handle_subscribe_to_weather"><code class="docutils literal notranslate"><span class="pre">handle_subscribe_to_weather()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#app.index"><code class="docutils literal notranslate"><span class="pre">index()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="routes.html">Routes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index1.html">WineCast</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index1.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">App</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/app.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-app">
+<span id="app"></span><h1>App<a class="headerlink" href="#module-app" title="Link to this heading"></a></h1>
+<section id="configuracao-cors">
+<h2>Configuração CORS<a class="headerlink" href="#configuracao-cors" title="Link to this heading"></a></h2>
+<section id="configuracao-da-api-rest">
+<h3>Configuração da API REST<a class="headerlink" href="#configuracao-da-api-rest" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CORS</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">resources</span><span class="o">=</span><span class="p">{</span>
+    <span class="sa">r</span><span class="s2">&quot;/api/*&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;origins&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;http://localhost:5173&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;methods&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;PUT&quot;</span><span class="p">,</span> <span class="s2">&quot;DELETE&quot;</span><span class="p">,</span> <span class="s2">&quot;OPTIONS&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;allow_headers&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s2">&quot;Authorization&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="endpoints-da-api-rest">
+<h2>Endpoints da API REST<a class="headerlink" href="#endpoints-da-api-rest" title="Link to this heading"></a></h2>
+<dl>
+<dt>GET /api/weather</dt><dd><p>Devolve o estado do tempo atual.
+- Parâmetros: lat (float), lon (float)
+- Exemplo de resposta:</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“event”: “Received data”,
+“payload”: {</p>
+<blockquote>
+<div><p>“temperature”: 22.5,
+“humidity”: 60,
+“precipitation”: 0,
+“wind_speed”: 3.5</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+</dd>
+<dt>POST /api/weather/analyze</dt><dd><p>Analisa condições do tempo.
+- JSON: temperature, humidity, precipitation (opcional), wind_speed (opcional)
+- Exemplo de resposta:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><p>“temperature”: 22.5,
+“humidity”: 60,
+“precipitation”: 0,
+“wind_speed”: 3.5,
+“needs_irrigation”: false,
+“risk_of_fungi”: false,
+“harvest_suggestion”: “Good day for harvest”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+</dd>
+</dl>
+</section>
+<section id="eventos-websocket">
+<h2>Eventos WebSocket<a class="headerlink" href="#eventos-websocket" title="Link to this heading"></a></h2>
+<section id="conexoes-websocket">
+<h3>Conexões WebSocket<a class="headerlink" href="#conexoes-websocket" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">socketio</span> <span class="o">=</span> <span class="n">SocketIO</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">cors_allowed_origins</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;http://localhost:5173&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Eventos:
+- connect: Cliente conectado ao servidor
+- disconnect: Cliente desconectado do servidor
+- weather_update: Atualizações meteorológicas em tempo real</p>
+<dl>
+<dt>Exemplo de Resposta weather_update:</dt><dd><dl class="simple">
+<dt>{</dt><dd><p>“temperature”: 23.0,
+“humidity”: 65,
+“precipitation”: 0,
+“wind_speed”: 2.8</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="exemplo-de-cliente-websocket">
+<h2>Exemplo de Cliente WebSocket<a class="headerlink" href="#exemplo-de-cliente-websocket" title="Link to this heading"></a></h2>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">io</span><span class="p">(</span><span class="s1">&#39;http://localhost:5000&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">withCredentials</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">extraHeaders</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;Access-Control-Allow-Origin&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5173&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;weather_update&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">dados</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Atualização meteorológica:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">dados</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</section>
+<section id="notas-importantes">
+<h2>Notas Importantes<a class="headerlink" href="#notas-importantes" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Backend: <a class="reference external" href="http://localhost:5000">http://localhost:5000</a></p></li>
+<li><p>Frontend: <a class="reference external" href="http://localhost:5173">http://localhost:5173</a></p></li>
+</ol>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.handle_connect">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">handle_connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.handle_connect" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.handle_disconnect">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">handle_disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.handle_disconnect" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.handle_subscribe_to_weather">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">handle_subscribe_to_weather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.handle_subscribe_to_weather" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.index">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.index" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="weather_service.html" class="btn btn-neutral float-left" title="Weather Service" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="routes.html" class="btn btn-neutral float-right" title="Routes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, camacho,ivo,vieira.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

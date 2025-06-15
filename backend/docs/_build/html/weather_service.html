@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Service &mdash; WineCast  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="App" href="app.html" />
+    <link rel="prev" title="Welcome to WineCast API’s documentation!" href="index1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index1.html" class="icon icon-home">
+            WineCast
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Conteúdo</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Weather Service</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#services.weather_service.ForecastData"><code class="docutils literal notranslate"><span class="pre">ForecastData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.ForecastData.date"><code class="docutils literal notranslate"><span class="pre">ForecastData.date</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.ForecastData.humidity"><code class="docutils literal notranslate"><span class="pre">ForecastData.humidity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.ForecastData.precipitation"><code class="docutils literal notranslate"><span class="pre">ForecastData.precipitation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.ForecastData.temperature"><code class="docutils literal notranslate"><span class="pre">ForecastData.temperature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.ForecastData.wind_speed"><code class="docutils literal notranslate"><span class="pre">ForecastData.wind_speed</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#services.weather_service.WeatherData"><code class="docutils literal notranslate"><span class="pre">WeatherData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherData.humidity"><code class="docutils literal notranslate"><span class="pre">WeatherData.humidity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherData.precipitation"><code class="docutils literal notranslate"><span class="pre">WeatherData.precipitation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherData.temperature"><code class="docutils literal notranslate"><span class="pre">WeatherData.temperature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherData.wind_speed"><code class="docutils literal notranslate"><span class="pre">WeatherData.wind_speed</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#services.weather_service.WeatherService"><code class="docutils literal notranslate"><span class="pre">WeatherService</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.HUMIDITY_HIGH"><code class="docutils literal notranslate"><span class="pre">WeatherService.HUMIDITY_HIGH</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.HUMIDITY_MAX"><code class="docutils literal notranslate"><span class="pre">WeatherService.HUMIDITY_MAX</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.HUMIDITY_MIN"><code class="docutils literal notranslate"><span class="pre">WeatherService.HUMIDITY_MIN</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.MESSAGES"><code class="docutils literal notranslate"><span class="pre">WeatherService.MESSAGES</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.TEMP_IRRIGATION"><code class="docutils literal notranslate"><span class="pre">WeatherService.TEMP_IRRIGATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.TEMP_MAX"><code class="docutils literal notranslate"><span class="pre">WeatherService.TEMP_MAX</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.TEMP_MIN"><code class="docutils literal notranslate"><span class="pre">WeatherService.TEMP_MIN</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.analyze_forecast"><code class="docutils literal notranslate"><span class="pre">WeatherService.analyze_forecast()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.analyze_weather_data"><code class="docutils literal notranslate"><span class="pre">WeatherService.analyze_weather_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.fetch_forecast"><code class="docutils literal notranslate"><span class="pre">WeatherService.fetch_forecast()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.fetch_weather_data"><code class="docutils literal notranslate"><span class="pre">WeatherService.fetch_weather_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.needs_irrigation"><code class="docutils literal notranslate"><span class="pre">WeatherService.needs_irrigation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.risk_of_fungi"><code class="docutils literal notranslate"><span class="pre">WeatherService.risk_of_fungi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services.weather_service.WeatherService.suggest_harvest_time"><code class="docutils literal notranslate"><span class="pre">WeatherService.suggest_harvest_time()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="app.html">App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes.html">Routes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index1.html">WineCast</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index1.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Weather Service</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/weather_service.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-services.weather_service">
+<span id="weather-service"></span><h1>Weather Service<a class="headerlink" href="#module-services.weather_service" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="services.weather_service.ForecastData">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">services.weather_service.</span></span><span class="sig-name descname"><span class="pre">ForecastData</span></span><a class="headerlink" href="#services.weather_service.ForecastData" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.ForecastData.date">
+<span class="sig-name descname"><span class="pre">date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#services.weather_service.ForecastData.date" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.ForecastData.humidity">
+<span class="sig-name descname"><span class="pre">humidity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#services.weather_service.ForecastData.humidity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.ForecastData.precipitation">
+<span class="sig-name descname"><span class="pre">precipitation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#services.weather_service.ForecastData.precipitation" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.ForecastData.temperature">
+<span class="sig-name descname"><span class="pre">temperature</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#services.weather_service.ForecastData.temperature" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.ForecastData.wind_speed">
+<span class="sig-name descname"><span class="pre">wind_speed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#services.weather_service.ForecastData.wind_speed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="services.weather_service.WeatherData">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">services.weather_service.</span></span><span class="sig-name descname"><span class="pre">WeatherData</span></span><a class="headerlink" href="#services.weather_service.WeatherData" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.WeatherData.humidity">
+<span class="sig-name descname"><span class="pre">humidity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#services.weather_service.WeatherData.humidity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.WeatherData.precipitation">
+<span class="sig-name descname"><span class="pre">precipitation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#services.weather_service.WeatherData.precipitation" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.WeatherData.temperature">
+<span class="sig-name descname"><span class="pre">temperature</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#services.weather_service.WeatherData.temperature" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.WeatherData.wind_speed">
+<span class="sig-name descname"><span class="pre">wind_speed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#services.weather_service.WeatherData.wind_speed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">services.weather_service.</span></span><span class="sig-name descname"><span class="pre">WeatherService</span></span><a class="headerlink" href="#services.weather_service.WeatherService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Serviço de operações e análise de dados meteorológicos.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.HUMIDITY_HIGH">
+<span class="sig-name descname"><span class="pre">HUMIDITY_HIGH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">80</span></em><a class="headerlink" href="#services.weather_service.WeatherService.HUMIDITY_HIGH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.HUMIDITY_MAX">
+<span class="sig-name descname"><span class="pre">HUMIDITY_MAX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">70</span></em><a class="headerlink" href="#services.weather_service.WeatherService.HUMIDITY_MAX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.HUMIDITY_MIN">
+<span class="sig-name descname"><span class="pre">HUMIDITY_MIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">40</span></em><a class="headerlink" href="#services.weather_service.WeatherService.HUMIDITY_MIN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.MESSAGES">
+<span class="sig-name descname"><span class="pre">MESSAGES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'bad_temp':</span> <span class="pre">'Temperatura</span> <span class="pre">não</span> <span class="pre">ideal</span> <span class="pre">para</span> <span class="pre">a</span> <span class="pre">colheita',</span> <span class="pre">'default':</span> <span class="pre">'Sugestão</span> <span class="pre">de</span> <span class="pre">colheita</span> <span class="pre">baseada</span> <span class="pre">em</span> <span class="pre">critérios</span> <span class="pre">de</span> <span class="pre">estabilidade',</span> <span class="pre">'good_harvest':</span> <span class="pre">'Bom</span> <span class="pre">dia</span> <span class="pre">para</span> <span class="pre">a</span> <span class="pre">colheita',</span> <span class="pre">'high_humidity':</span> <span class="pre">'Humidade</span> <span class="pre">elevada,</span> <span class="pre">risco</span> <span class="pre">de</span> <span class="pre">fungos</span> <span class="pre">—</span> <span class="pre">adie</span> <span class="pre">a</span> <span class="pre">colheita',</span> <span class="pre">'humidity_warning':</span> <span class="pre">'Humidade</span> <span class="pre">ligeiramente</span> <span class="pre">elevada,</span> <span class="pre">vigie</span> <span class="pre">risco</span> <span class="pre">de</span> <span class="pre">fungos',</span> <span class="pre">'wet_weather':</span> <span class="pre">'Aguarde</span> <span class="pre">tempo</span> <span class="pre">seco</span> <span class="pre">antes</span> <span class="pre">de</span> <span class="pre">colher'}</span></em><a class="headerlink" href="#services.weather_service.WeatherService.MESSAGES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.TEMP_IRRIGATION">
+<span class="sig-name descname"><span class="pre">TEMP_IRRIGATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#services.weather_service.WeatherService.TEMP_IRRIGATION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.TEMP_MAX">
+<span class="sig-name descname"><span class="pre">TEMP_MAX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">28</span></em><a class="headerlink" href="#services.weather_service.WeatherService.TEMP_MAX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.TEMP_MIN">
+<span class="sig-name descname"><span class="pre">TEMP_MIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">18</span></em><a class="headerlink" href="#services.weather_service.WeatherService.TEMP_MIN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.analyze_forecast">
+<span class="sig-name descname"><span class="pre">analyze_forecast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#services.weather_service.WeatherService.analyze_forecast" title="Link to this definition"></a></dt>
+<dd><p>Analisa as previsões meteorológicas para o planejamento da colheita.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>lat (float): Latitude da localização.
+lon (float): Longitude da localização.
+days (int): Número de dias para previsão (padrão: 3).</p>
+</dd>
+<dt>Returns:</dt><dd><p>Optional[Dict]: Um dicionário contendo a análise diária e um resumo ou None se a requisição falhar.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.analyze_weather_data">
+<span class="sig-name descname"><span class="pre">analyze_weather_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">humidity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precipitation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wind_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#services.weather_service.WeatherService.analyze_weather_data" title="Link to this definition"></a></dt>
+<dd><p>Analisa os dados meteorológicos fornecidos.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>temperature (float): Temperatura atual.
+humidity (float): Humidade atual.
+precipitation (float, optional): Precipitação atual (padrão: 0).
+wind_speed (float, optional): Velocidade do vento atual (padrão: 0.0).</p>
+</dd>
+<dt>Returns:</dt><dd><p>Optional[dict]: Um dicionário contendo os resultados da análise ou None se os dados forem inválidos.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.fetch_forecast">
+<span class="sig-name descname"><span class="pre">fetch_forecast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#services.weather_service.WeatherService.fetch_forecast" title="Link to this definition"></a></dt>
+<dd><p>Obtém a previsão do tempo para o número de dias especificado.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>lat (float): Latitude da localização.
+lon (float): Longitude da localização.
+days (int): Número de dias para previsão (padrão: 3).</p>
+</dd>
+<dt>Returns:</dt><dd><p>Optional[List[ForecastData]]: Uma lista de dicionários contendo dados de previsão ou None se a requisição falhar.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#services.weather_service.ForecastData" title="services.weather_service.ForecastData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForecastData</span></code></a>], <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.fetch_weather_data">
+<span class="sig-name descname"><span class="pre">fetch_weather_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#services.weather_service.WeatherService.fetch_weather_data" title="Link to this definition"></a></dt>
+<dd><p>Obtém dados meteorológicos da API OpenWeather.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>lat (float): Latitude da localização.
+lon (float): Longitude da localização.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Optional[WeatherData]: Um dicionário contendo dados meteorológicos ou None se a requisição falhar.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#services.weather_service.WeatherData" title="services.weather_service.WeatherData"><code class="xref py py-class docutils literal notranslate"><span class="pre">WeatherData</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.needs_irrigation">
+<span class="sig-name descname"><span class="pre">needs_irrigation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precipitation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#services.weather_service.WeatherService.needs_irrigation" title="Link to this definition"></a></dt>
+<dd><p>Verifica se é necessária irrigação.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>temperature (float): Temperatura atual.
+precipitation (float): Precipitação atual.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bool: True se for necessária irrigação, False caso contrário.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.risk_of_fungi">
+<span class="sig-name descname"><span class="pre">risk_of_fungi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">humidity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#services.weather_service.WeatherService.risk_of_fungi" title="Link to this definition"></a></dt>
+<dd><p>Verifica o risco de fungos com base na humidade e temperatura.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>humidity (float): Humidade atual.
+temperature (float): Temperatura atual.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bool: True se houver risco de fungos, False caso contrário.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.weather_service.WeatherService.suggest_harvest_time">
+<span class="sig-name descname"><span class="pre">suggest_harvest_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">humidity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precipitation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#services.weather_service.WeatherService.suggest_harvest_time" title="Link to this definition"></a></dt>
+<dd><p>Sugere o melhor momento para colheita com base nas condições meteorológicas.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>temperature (float): Temperatura atual.
+humidity (float): Humidade atual.
+precipitation (float, optional): Precipitação atual (padrão: 0).</p>
+</dd>
+<dt>Returns:</dt><dd><p>str: Mensagem com a sugestão de colheita.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index1.html" class="btn btn-neutral float-left" title="Welcome to WineCast API’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="app.html" class="btn btn-neutral float-right" title="App" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, camacho,ivo,vieira.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
