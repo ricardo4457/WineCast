@@ -37,7 +37,6 @@ class WeatherService:
         "high_humidity": "Humidade elevada, risco de fungos — adie a colheita",
         "good_harvest": "Bom dia para a colheita",
         "humidity_warning": "Humidade ligeiramente elevada, vigie risco de fungos",
-        "default": "Sugestão de colheita baseada em critérios de estabilidade",
     }
 
     def __init__(self):
@@ -193,7 +192,7 @@ class WeatherService:
             return self.MESSAGES["good_harvest"]
         if self.HUMIDITY_MAX < humidity <= self.HUMIDITY_HIGH:
             return self.MESSAGES["humidity_warning"]
-        return self.MESSAGES["default"]
+        return self.MESSAGES["good_harvest"]
 
     def _summarize_forecast(self, daily_analysis: List[Dict]) -> Dict:
         """Resumir a análise diária da previsão do tempo."""
